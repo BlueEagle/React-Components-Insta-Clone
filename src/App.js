@@ -14,14 +14,29 @@ import dataFile from './dummy-data';
 const App = () => {
   // set up state for your data
   const [data, setData] = useState(dataFile);
+  const [searchTerm, setSearchTerm] = useState('')
+  const [displayData, setDisplayData] = useState(data);
 
   return (
     <div className="App">
       {/* Add imported components here to render them */}
-      <SearchBar />
-      <PostsPage data={data} />
+      <SearchBar liveSearch={searchFunction} />
+      <PostsPage data={displayData} />
     </div>
   );
+
+  function searchFunction(e) {
+    setSearchTerm(e.target.value)
+    if (searchTerm !== '') setDisplayData(data.filter(post => post.username.toLowerCase().includes(e.target.value.toLowerCase())))
+  }
+
+  function filterData() {
+    // return searchTerm === '' ? data : data.filter(post => post.username.toLowerCase.contains(searchTerm.toLowerCase))
+    if (searchTerm === '') return data
+    let matchingPosts = data
+    // console.log(searchTerm)
+  }
 };
+
 
 export default App;
